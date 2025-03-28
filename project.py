@@ -41,3 +41,19 @@ def scan(requests, head, max_cylinder):
 
     seek_time = sum(abs(seek_sequence[i] - seek_sequence[i+1]) for i in range(len(seek_sequence) - 1))
     return seek_sequence, seek_time
+def c_scan(requests, head, max_cylinder):
+    """ C-SCAN Disk Scheduling """
+    requests.append(head)
+    requests.sort()
+    seek_sequence = []
+
+    idx = requests.index(head)
+    seek_sequence.extend(requests[idx:])  # Move towards max cylinder
+    seek_sequence.append(max_cylinder)  # Go to max limit
+    seek_sequence.append(0)  # Jump to min
+    seek_sequence.extend(requests[:idx])  # Serve remaining requests
+
+    seek_time = sum(abs(seek_sequence[i] - seek_sequence[i+1]) for i in range(len(seek_sequence) - 1))
+    return seek_sequence, seek_time
+
+# LOOK and C-LOOK similar to SCAN and C-SCAN, but don't go to disk edges.
