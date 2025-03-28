@@ -67,3 +67,34 @@ def plot_disk_movement(seek_sequence):
     plt.title("Disk Head Movement")
     plt.grid(True)
     plt.show()
+
+
+# GUI Implementation
+
+def run_scheduler():
+    try:
+        requests = list(map(int, entry_requests.get().split(",")))
+        head = int(entry_head.get())
+        algorithm = algo_var.get()
+        max_cylinder = 200  # Set disk size
+
+        if algorithm == "FCFS":
+            seek_sequence, seek_time = fcfs(requests, head)
+        elif algorithm == "SSTF":
+            seek_sequence, seek_time = sstf(requests, head)
+        elif algorithm == "SCAN":
+            seek_sequence, seek_time = scan(requests, head, max_cylinder)
+        elif algorithm == "C-SCAN":
+            seek_sequence, seek_time = c_scan(requests, head, max_cylinder)
+        else:
+            messagebox.showerror("Error", "Select a valid algorithm")
+            return
+
+        # Show results
+        result_label.config(text=f"Seek Time: {seek_time}")
+        plot_disk_movement(seek_sequence)
+
+    except ValueError:
+        messagebox.showerror("Input Error", "Enter valid numbers for requests and head position.")
+
+
