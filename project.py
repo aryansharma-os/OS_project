@@ -98,3 +98,28 @@ def run_scheduler():
         messagebox.showerror("Input Error", "Enter valid numbers for requests and head position.")
 
 
+# Tkinter GUI
+
+root = tk.Tk()
+root.title("Adaptive Disk Scheduling Visualizer")
+
+tk.Label(root, text="Request Sequence (comma-separated):").pack()
+entry_requests = tk.Entry(root)
+entry_requests.pack()
+
+tk.Label(root, text="Initial Head Position:").pack()
+entry_head = tk.Entry(root)
+entry_head.pack()
+
+tk.Label(root, text="Select Algorithm:").pack()
+algo_var = tk.StringVar(value="FCFS")
+tk.OptionMenu(root, algo_var, "FCFS", "SSTF", "SCAN", "C-SCAN").pack()
+
+tk.Button(root, text="Run Scheduler", command=run_scheduler).pack()
+result_label = tk.Label(root, text="Seek Time: ")
+result_label.pack()
+
+root.mainloop()
+
+
+
