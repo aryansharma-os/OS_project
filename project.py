@@ -57,3 +57,13 @@ def c_scan(requests, head, max_cylinder):
     return seek_sequence, seek_time
 
 # LOOK and C-LOOK similar to SCAN and C-SCAN, but don't go to disk edges.
+
+def plot_disk_movement(seek_sequence):
+    """ Function to visualize disk head movement """
+    plt.figure(figsize=(8, 5))
+    plt.plot(seek_sequence, range(len(seek_sequence)), marker="o", linestyle="-", color="b")
+    plt.xlabel("Cylinder Number")
+    plt.ylabel("Sequence Step")
+    plt.title("Disk Head Movement")
+    plt.grid(True)
+    plt.show()
